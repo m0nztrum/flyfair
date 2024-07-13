@@ -1,7 +1,9 @@
 export const Header = () => {
     return (
-        <div>
-            <div></div>
+        <div className="p-4">
+            <span className="text-left text-3xl font-extrabold text-white">
+                flyfair
+            </span>
         </div>
-    )
-}
+    );
+};
