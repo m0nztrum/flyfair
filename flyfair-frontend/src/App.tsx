@@ -1,6 +1,5 @@
 import { Header } from './components/shared/Header';
 import { SearchForm } from './components/SearchForm';
-import { Footer } from './components/shared/Footer';
 
 function App() {
     return (
@@ -9,7 +8,6 @@ function App() {
             <div className="flex-grow">
                 <SearchForm />
             </div>
-            <Footer />
         </div>
     );
 }
