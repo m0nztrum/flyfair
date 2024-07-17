@@ -3,9 +3,9 @@ export const ResultsCard = () => {
         <div>
             <div>
                 {/* first line */}
-                <div></div>
+                <div>Hello</div>
                 {/* second line */}
-                <div></div>
+                <div>Hello</div>
             </div>
         </div>
     );
