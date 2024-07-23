@@ -1,11 +1,9 @@
-export const ResultsCard = () => {
+export const ResultsCard = ({ flights: [] }) => {
     return (
         <div>
+            <p>flight depart time</p>
             <div>
-                {/* first line */}
-                <div>Hello</div>
-                {/* second line */}
-                <div>Hello</div>
+                <p>Currency</p>
             </div>
         </div>
     );
