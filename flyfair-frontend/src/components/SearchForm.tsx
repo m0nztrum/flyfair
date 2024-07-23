@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { InputField } from './InputField';
 
 export const SearchForm = () => {
-    const [departFrom, setDepartFrom] = useState('');
-    const [arriveAt, setArriveAt] = useState('');
-    const [departDate, setDepartDate] = useState('');
-    const [arriveDate, setArriveDate] = useState('');
+    const [departFrom, setDepartFrom] = useState<string>('');
+    const [arriveAt, setArriveAt] = useState<string>('');
+    const [departDate, setDepartDate] = useState<string>('');
+    const [arriveDate, setArriveDate] = useState<string>('');
 
     return (
         <div className="mx-auto w-screen px-4">
