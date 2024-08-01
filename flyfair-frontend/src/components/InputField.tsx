@@ -19,7 +19,7 @@ export const InputField = ({
             placeholder={placeholder}
             value={value}
             onChange={onChange}
-            className="mb-2 rounded-xl border border-black p-4"
+            className="mb-2 w-full rounded-xl border border-black p-4"
         />
     );
 };
