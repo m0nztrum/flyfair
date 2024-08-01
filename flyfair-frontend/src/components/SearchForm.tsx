@@ -24,21 +24,18 @@ export const SearchForm = () => {
         setError('');
 
         try {
-            const response = await fetch(
-                'https://flyfare.onrender.com/search',
-                {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        departFrom,
-                        arriveAt,
-                        departDate,
-                        arriveDate,
-                    }),
+            const response = await fetch('http://localhost:7000/search', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
                 },
-            );
+                body: JSON.stringify({
+                    departFrom,
+                    arriveAt,
+                    departDate,
+                    arriveDate,
+                }),
+            });
 
             if (response.ok) {
                 const data = await response.json();
@@ -56,10 +53,10 @@ export const SearchForm = () => {
     };
 
     return (
-        <div className="mx-auto w-screen px-4">
-            <div className="rounded-lg bg-white p-6 opacity-85">
-                <form onSubmit={handleSubmit}>
-                    <div className="flex justify-center space-x-4">
+        <div className="container mx-auto w-screen max-w-4xl px-4 py-8">
+            <div className="rounded-lg bg-white p-8 shadow-md">
+                <form onSubmit={handleSubmit} className="space-y-6">
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
                         <InputField
                             inputtype="text"
                             placeholder="from"
@@ -85,10 +82,10 @@ export const SearchForm = () => {
                             onChange={(e) => setArriveDate(e.target.value)}
                         />
                     </div>
-                    <div className="mt-4 flex justify-center">
+                    <div className="flex justify-center">
                         <button
                             type="submit"
-                            className="rounded-lg bg-gray-500 px-6 py-2 font-semibold"
+                            className="rounded-lg bg-blue-600 px-6 py-2 font-semibold text-white transition-colors hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                         >
                             {searching ? 'Searching...' : 'Search'}
                         </button>
@@ -101,16 +98,16 @@ export const SearchForm = () => {
             {/* Results display section */}
             <div>
                 {searching ? (
-                    <div className="p-2 text-center font-bold text-white">
+                    <div className="p-4 text-center font-bold text-gray-700">
                         Loading...
                     </div>
                 ) : hasSearched && flightResults.length === 0 ? (
-                    <div className="text-center font-extrabold text-red-500">
+                    <div className="p-4 text-center font-bold text-red-500">
                         No flights found
                     </div>
                 ) : (
                     flightResults.map((flight, index) => (
-                        <ResultsCard key={index} flights={flight} />
+                        <ResultsCard key={index} flight={flight} />
                     ))
                 )}
             </div>
