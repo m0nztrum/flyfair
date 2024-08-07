@@ -1,13 +1,15 @@
 import { ChangeEvent } from 'react';
 
 type InputFieldProps = {
+    name: string;
     inputtype: string;
-    placeholder: string;
+    placeholder?: string;
     value: string;
     onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 };
 
 export const InputField = ({
+    name,
     inputtype,
     placeholder,
     value,
@@ -16,6 +18,7 @@ export const InputField = ({
     return (
         <input
             type={inputtype}
+            name={name}
             placeholder={placeholder}
             value={value}
             onChange={onChange}
