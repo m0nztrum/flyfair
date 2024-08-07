@@ -3,20 +3,25 @@ import { InputField } from './InputField';
 import { ResultsCard } from './ResultsCard';
 
 export const SearchForm = () => {
-    const [departFrom, setDepartFrom] = useState<string>('');
-    const [arriveAt, setArriveAt] = useState<string>('');
-    const [departDate, setDepartDate] = useState<string>('');
-    const [arriveDate, setArriveDate] = useState<string>('');
     const [searching, setSearching] = useState<boolean>(false);
     const [hasSearched, setHasSearched] = useState<boolean>(false);
     const [flightResults, setFlightResults] = useState([]);
     const [error, setError] = useState<string>('');
+    const [formData, setFormData] = useState({
+        departFrom: '',
+        arriveAt: '',
+        departDate: '',
+        arriveDate: '',
+    });
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         setHasSearched(true);
 
-        if (departFrom === arriveAt) {
+        if (formData.departFrom === formData.arriveAt) {
             setError('Departure and destination cannot be the same');
             return;
         }
@@ -29,12 +34,7 @@ export const SearchForm = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    departFrom,
-                    arriveAt,
-                    departDate,
-                    arriveDate,
-                }),
+                body: JSON.stringify(formData),
             });
 
             if (response.ok) {
@@ -45,8 +45,8 @@ export const SearchForm = () => {
                 console.error('Error fetching flight prices');
                 setError('');
             }
-        } catch (error) {
-            console.error('Error in handleSubmit: ', error.message);
+        } catch (error: unknown) {
+            console.error(`Error in handleSubmit: {error.message}`);
         } finally {
             setSearching(false);
         }
@@ -58,28 +58,30 @@ export const SearchForm = () => {
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
                         <InputField
+                            name="departFrom"
                             inputtype="text"
                             placeholder="from"
-                            value={departFrom}
-                            onChange={(e) => setDepartFrom(e.target.value)}
+                            value={formData.departFrom}
+                            onChange={handleChange}
                         />
                         <InputField
+                            name="arriveAt"
                             inputtype="text"
                             placeholder="to"
-                            value={arriveAt}
-                            onChange={(e) => setArriveAt(e.target.value)}
+                            value={formData.arriveAt}
+                            onChange={handleChange}
                         />
                         <InputField
+                            name="departDate"
                             inputtype="date"
-                            placeholder="Departure"
-                            value={departDate}
-                            onChange={(e) => setDepartDate(e.target.value)}
+                            value={formData.departDate}
+                            onChange={handleChange}
                         />
                         <InputField
+                            name="departDate"
                             inputtype="date"
-                            placeholder="Departure"
-                            value={arriveDate}
-                            onChange={(e) => setArriveDate(e.target.value)}
+                            value={formData.arriveDate}
+                            onChange={handleChange}
                         />
                     </div>
                     <div className="flex justify-center">
@@ -92,7 +94,9 @@ export const SearchForm = () => {
                     </div>
                 </form>
                 {error && (
-                    <div className="mt-4 text-center text-red-600">{error}</div>
+                    <div className="mt-4 text-center text-red-600" role="alert">
+                        {error}
+                    </div>
                 )}
             </div>
             {/* Results display section */}
