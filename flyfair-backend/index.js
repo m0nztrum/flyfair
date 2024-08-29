@@ -10,7 +10,7 @@ const app = express();
 
 app.use(
     cors({
-        // origin: 'https://flyfare.vercel.app',
+        origin: 'http://localhost:5173',
         methods: 'GET,POST,PUT,DELETE',
         allowedHeaders: 'Content-Type,Authorization',
     }),
@@ -42,7 +42,6 @@ async function getIATACode(city) {
     }
 }
 
-// flight search
 app.post('/search', async (req, res) => {
     const { departFrom, arriveAt, departDate, arriveDate } = req.body;
 
