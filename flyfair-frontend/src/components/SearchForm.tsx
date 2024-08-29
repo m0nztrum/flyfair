@@ -6,7 +6,7 @@ export const SearchForm = () => {
     const [searching, setSearching] = useState<boolean>(false);
     const [hasSearched, setHasSearched] = useState<boolean>(false);
     const [flightResults, setFlightResults] = useState([]);
-    const [error, setError] = useState<string>('');
+    const [error, setError] = useState<string | null>(null);
     const [formData, setFormData] = useState({
         departFrom: '',
         arriveAt: '',
@@ -46,7 +46,13 @@ export const SearchForm = () => {
                 setError('');
             }
         } catch (error: unknown) {
-            console.error(`Error in handleSubmit: {error.message}`);
+            console.error('Error in handleSubmit: ', error);
+            setFlightResults([]);
+            if (error instanceof Error) {
+                setError(`An unexpected error has occured: ${error.message}`);
+            } else {
+                setError('An unexpected error has occured');
+            }
         } finally {
             setSearching(false);
         }
@@ -54,7 +60,7 @@ export const SearchForm = () => {
 
     return (
         <div className="container mx-auto w-screen max-w-4xl px-4 py-8">
-            <div className="rounded-lg bg-white p-8 shadow-md">
+            <div className="rounded-lg border border-black bg-white p-8 shadow-md">
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
                         <InputField
@@ -78,7 +84,7 @@ export const SearchForm = () => {
                             onChange={handleChange}
                         />
                         <InputField
-                            name="departDate"
+                            name="arriveDate"
                             inputtype="date"
                             value={formData.arriveDate}
                             onChange={handleChange}
